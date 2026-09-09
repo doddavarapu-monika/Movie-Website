@@ -41,13 +41,19 @@
   <button type="submit">+ Add Movie</button>
 </form>
 
-<!-- MOOD FILTER -->
+<!-- MOOD FILTER - FIXED WITH ALL MOODS + SURPRISE ME -->
 <div style="margin-top:15px;">
   <p style="color:#aaa; font-size:13px;">Filter by Mood:</p>
   <button class="filter-btn" onclick="filterMood('All')">All</button>
   <button class="filter-btn" onclick="filterMood('Happy 😊')">Happy 😊</button>
   <button class="filter-btn" onclick="filterMood('Sad 😔')">Sad 😔</button>
+  <button class="filter-btn" onclick="filterMood('Boring Day 🥱')">Boring Day 🥱</button>
+  <button class="filter-btn" onclick="filterMood('Family Time')">Family Time 👨‍👩‍👧</button>
   <button class="filter-btn" onclick="location.reload()">Clear Filter</button>
+</div>
+
+<div style="text-align:center; margin-top:15px;">
+  <button onclick="surpriseMe()" style="background:gold; color:black; width:auto; padding:12px 25px; border-radius:25px; font-weight:bold;">🎲 Surprise Me! 🍿</button>
 </div>
 
 <!-- MOVIE LIST -->
@@ -73,6 +79,17 @@ function filterMood(mood) {
     if(card.innerHTML.includes(mood)) card.style.display='block';
     else card.style.display='none';
   });
+}
+
+function surpriseMe() {
+  const visibleCards = Array.from(document.querySelectorAll('.movie-card')).filter(c => c.style.display !== 'none');
+  const cards = visibleCards.length > 0 ? visibleCards : document.querySelectorAll('.movie-card');
+  if(cards.length == 0) { alert('No movies! Add some first!'); return; }
+  const random = cards[Math.floor(Math.random() * cards.length)];
+  random.style.border = '2px solid gold';
+  random.scrollIntoView({behavior:'smooth', block:'center'});
+  const name = random.querySelector('b').innerText;
+  setTimeout(() => alert('🍿 Tonight Watch: ' + name + ' !'), 500);
 }
 </script>
 
